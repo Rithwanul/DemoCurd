@@ -98,5 +98,29 @@ namespace DemoCurd.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        /*
+         * Method get create page
+         * **/
+        
+        public async Task<IActionResult> Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id, FirstName, LastName, EmailAddress, Phone, Address, City, State, Zip")] Author author)
+        {
+            if(ModelState.IsValid)
+            {
+                context.Add(author);
+                await context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+            
+
+        }
     }
 }
