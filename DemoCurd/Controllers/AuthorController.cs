@@ -103,7 +103,7 @@ namespace DemoCurd.Controllers
          * Method get create page
          * **/
         
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -118,9 +118,33 @@ namespace DemoCurd.Controllers
                 await context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View();
-            
+            return View();    
+        }
 
+        /*
+         * Get method for delete user
+         */
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            var author = await context.Author.FirstOrDefaultAsync(a => a.Id == id);
+            return View(author);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> DeleteConfirmed(int? id)
+        {
+            var author = await context.Author.FindAsync(id);
+            if(author != null)
+            {
+                context.Author.Remove(author);
+                await context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
