@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using DemoCurd.DbContexts;
 using DemoCurd.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace DemoCurd.Controllers
 {
@@ -130,6 +126,10 @@ namespace DemoCurd.Controllers
             var author = await context.Author.FirstOrDefaultAsync(a => a.Id == id);
             return View(author);
         }
+
+        /*
+         * Post message for confirm delete operation.
+         */
 
         [HttpPost]
         [ValidateAntiForgeryToken]
